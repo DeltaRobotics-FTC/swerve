@@ -166,6 +166,7 @@ public class DiffyPod implements SwervePod {
 
 //        turnPower = 0;
 
+
         setMotorPowers(turnPower + drivePower, turnPower - drivePower);
     }
 

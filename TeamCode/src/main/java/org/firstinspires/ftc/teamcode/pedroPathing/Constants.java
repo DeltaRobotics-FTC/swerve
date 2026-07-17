@@ -34,8 +34,8 @@ public class Constants {
                 "motorLF",
                 "motorLB",
                 DcMotorSimple.Direction.REVERSE,
-                DcMotorSimple.Direction.REVERSE,
-                new PIDFCoefficients(0.2,0, 0.001, 0),
+                DcMotorSimple.Direction.FORWARD,
+                new PIDFCoefficients(0.2,0, 0, 0),
                 0,
                 new Pose(-6, 0, 0),
                 0,
@@ -46,7 +46,7 @@ public class Constants {
         return pod;
     }
 
-    private static DiffyPod right(HardwareMap hardwareMap) {
+    public static DiffyPod right(HardwareMap hardwareMap) {
         DiffyPod pod = new DiffyPod(
                 hardwareMap,
                 new DiffyEncodersAsAnalog(
@@ -56,9 +56,9 @@ public class Constants {
                 ),
                 "motorRF",
                 "motorRB",
-                DcMotorSimple.Direction.REVERSE,
                 DcMotorSimple.Direction.FORWARD,
-                new PIDFCoefficients(0.2,0.0001, 0.001, 0),
+                DcMotorSimple.Direction.REVERSE,
+                new PIDFCoefficients(0.2,0, 0, 0),
                 0,
                 new Pose(6, 0, 0),
                 0,
