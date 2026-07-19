@@ -6,12 +6,17 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
+import org.firstinspires.ftc.robotcore.external.Const;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
+import org.firstinspires.ftc.teamcode.pedroPathing.DiffyPod;
 
 @TeleOp(name = "teleop")
 public class basicTeleop extends OpMode {
     private Follower follower;
     public static Pose startingPose;
+
+    DiffyPod right;
+    DiffyPod left;
 
     DcMotorEx rf;
     DcMotorEx rb;
@@ -21,7 +26,10 @@ public class basicTeleop extends OpMode {
 
     @Override
     public void init() {
-        follower = Constants.createFollower(hardwareMap);
+        right = Constants.right(hardwareMap);
+        left = Constants.left(hardwareMap);
+
+        follower = Constants.createFollower(hardwareMap, right, left);
         follower.setStartingPose(startingPose == null ? new Pose() : startingPose);
         follower.update();
 
@@ -55,6 +63,30 @@ public class basicTeleop extends OpMode {
         telemetry.addData("lb", lb.getCurrentPosition());
 
         telemetry.addData("starting pose", startingPose);
+
+        telemetry.addData("\n----START SWERVE----", "");
+
+        telemetry.addData("\n--RIGHT--", "");
+
+        telemetry.addData("actualRad", right.actualRad);
+        telemetry.addData("desiredRad", right.desiredRad);
+        telemetry.addData("magnitude", right.mag);
+        telemetry.addData("direction", right.dir);
+        telemetry.addData("errorRad", right.errorRad);
+        telemetry.addData("turnPower", right.turnPower);
+        telemetry.addData("drivePower", right.drivePower);
+
+        telemetry.addData("\n--LEFT--", "");
+
+        telemetry.addData("actualRad", left.actualRad);
+        telemetry.addData("desiredRad", left.desiredRad);
+        telemetry.addData("magnitude", left.mag);
+        telemetry.addData("direction", left.dir);
+        telemetry.addData("errorRad", left.errorRad);
+        telemetry.addData("turnPower", left.turnPower);
+        telemetry.addData("drivePower", left.drivePower);
+
+        telemetry.addData("\n----END SWERVE----", "");
 
     }
 }

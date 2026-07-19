@@ -23,7 +23,7 @@ public class Constants {
     public static SwerveConstants swerveConstants = new SwerveConstants()
             .maxPower(1);
 
-    private static DiffyPod left(HardwareMap hardwareMap) {
+    public static DiffyPod left(HardwareMap hardwareMap) {
         DiffyPod pod = new DiffyPod(
                 hardwareMap,
                 new DiffyEncodersAsAnalog(
@@ -86,6 +86,16 @@ public class Constants {
                 .swerveDrivetrain(swerveConstants,
                         left(hardwareMap),
                         right(hardwareMap))
+                .build();
+    }
+
+    public static Follower createFollower(HardwareMap hardwareMap, DiffyPod right, DiffyPod left) {
+        return new FollowerBuilder(followerConstants, hardwareMap)
+                .pathConstraints(pathConstraints)
+                .twoWheelLocalizer(localizerConstants)
+                .swerveDrivetrain(swerveConstants,
+                        left,
+                        right)
                 .build();
     }
 }

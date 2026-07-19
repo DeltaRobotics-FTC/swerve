@@ -124,6 +124,16 @@ public class DiffyPod implements SwervePod {
         return MathFunctions.normalizeAngle(t);
     }
 
+
+
+    public double actualRad;
+    public double desiredRad;
+    public double mag;
+    public double dir;
+    public double errorRad;
+    public double turnPower;
+    public double drivePower;
+
     /**
      * Move pod to a wheel heading in radians with a drive power [-1,1].
      *
@@ -133,21 +143,23 @@ public class DiffyPod implements SwervePod {
      */
     @Override
     public void move(double targetAngleRad, double drivePower, boolean ignoreAngleChanges) {
+        this.drivePower = drivePower;
         // Normalize hardware angle in radians
-        double actualRad = MathFunctions.normalizeAngle(getAngleAfterOffsetRad());
+        actualRad = MathFunctions.normalizeAngle(getAngleAfterOffsetRad());
 
         // Adjust polarity dependent on encoder direction
-        double desiredRad = adjustThetaForEncoder(targetAngleRad);
+        desiredRad = adjustThetaForEncoder(targetAngleRad);
 
         // Get signed error
-        double mag = MathFunctions.getSmallestAngleDifference(actualRad, desiredRad);
-        double dir = MathFunctions.getTurnDirection(actualRad, desiredRad);
-        double errorRad = (mag == Math.PI) ? -Math.PI : mag * dir;
+        mag = MathFunctions.getSmallestAngleDifference(actualRad, desiredRad);
+        dir = MathFunctions.getTurnDirection(actualRad, desiredRad);
+        errorRad = (mag == Math.PI) ? -Math.PI : mag * dir;
 
         // Flip direction and turn to desiredRad + pi if shortest path is greater than pi / 2
         if (Math.abs(errorRad) > (Math.PI  / 2)) {
             desiredRad = MathFunctions.normalizeAngle(desiredRad + Math.PI);
             drivePower = -drivePower;
+            this.drivePower = drivePower;
 
             mag = MathFunctions.getSmallestAngleDifference(actualRad, desiredRad);
             dir = MathFunctions.getTurnDirection(actualRad, desiredRad);
@@ -162,7 +174,7 @@ public class DiffyPod implements SwervePod {
         }
 
         turnPID.updateError(errorRad);
-        double turnPower = ignoreAngleChanges ? 0 : MathFunctions.clamp(turnPID.run(), -1, 1);
+        turnPower = ignoreAngleChanges ? 0 : MathFunctions.clamp(turnPID.run(), -1, 1);
 
 //        turnPower = 0;
 
