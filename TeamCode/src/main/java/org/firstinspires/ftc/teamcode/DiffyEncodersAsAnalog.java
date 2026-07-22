@@ -16,10 +16,10 @@ public class DiffyEncodersAsAnalog implements HardwareDevice {
     
     public double getVoltage() {
         double ticks = (topEncoder.getCurrentPosition() - bottomEncoder.getCurrentPosition()) % tpr;
-        ticks = ticks > 0 ? ticks : tpr - ticks;
+        ticks = ticks > 0 ? ticks : tpr + ticks;
         return (ticks / tpr) * 3.3;
     }
-    
+
     public double getMaxVoltage() {
         return 3.3;
     }

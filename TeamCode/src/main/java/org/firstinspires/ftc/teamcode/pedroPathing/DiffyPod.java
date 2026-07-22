@@ -4,7 +4,6 @@ import com.pedropathing.control.PIDFController;
 import com.pedropathing.ftc.drivetrains.SwervePod;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.math.MathFunctions;
-import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -179,7 +178,11 @@ public class DiffyPod implements SwervePod {
 //        turnPower = 0;
 
 
-        setMotorPowers(turnPower + drivePower, turnPower - drivePower);
+        setMotorPowers(turnPower - drivePower, turnPower + drivePower);
+    }
+
+    public double getVoltage() {
+        return turnEncoder.getVoltage();
     }
 
     public void setTopPower(double power) {
@@ -234,7 +237,7 @@ public class DiffyPod implements SwervePod {
             return 0;
         }
 
-        double normalized = (turnEncoder.getVoltage() - analogMinVoltage) / range;
+        double normalized = (getVoltage() - analogMinVoltage) / range;
         normalized = MathFunctions.clamp(normalized, 0, 1);
         return normalized * (2.0 * Math.PI);
     }

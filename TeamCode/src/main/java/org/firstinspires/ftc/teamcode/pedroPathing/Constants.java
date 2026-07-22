@@ -29,7 +29,7 @@ public class Constants {
                 new DiffyEncodersAsAnalog(
                         hardwareMap.get(DcMotorEx.class, "motorLF"),
                         hardwareMap.get(DcMotorEx.class, "motorLB"),
-                        78.0/535.0
+                        285.0
                 ),
                 "motorLF",
                 "motorLB",
@@ -52,18 +52,18 @@ public class Constants {
                 new DiffyEncodersAsAnalog(
                         hardwareMap.get(DcMotorEx.class, "motorRF"),
                         hardwareMap.get(DcMotorEx.class, "motorRB"),
-                        78.0/535.0
+                        285.0
                 ),
                 "motorRF",
                 "motorRB",
-                DcMotorSimple.Direction.FORWARD,
                 DcMotorSimple.Direction.REVERSE,
-                new PIDFCoefficients(0.2,0, 0, 0),
+                DcMotorSimple.Direction.FORWARD,
+                new PIDFCoefficients(0.1,0, 0, 0),
                 0,
                 new Pose(6, 0, 0),
                 0,
                 3.3,
-                true
+                false
         );
 
         return pod;
@@ -83,9 +83,11 @@ public class Constants {
         return new FollowerBuilder(followerConstants, hardwareMap)
                 .pathConstraints(pathConstraints)
                 .twoWheelLocalizer(localizerConstants)
-                .swerveDrivetrain(swerveConstants,
-                        left(hardwareMap),
-                        right(hardwareMap))
+//                .swerveDrivetrain(
+//                        swerveConstants,
+//                        left(hardwareMap),
+//                        right(hardwareMap)
+//                )
                 .build();
     }
 

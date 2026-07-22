@@ -46,16 +46,20 @@ public class basicTeleop extends OpMode {
 
     @Override
     public void loop() {
-        follower.update();
+//        follower.update();
+//
+//        follower.setTeleOpDrive(
+//                -gamepad1.left_stick_y,
+//                //-gamepad1.left_stick_x,
+//                0,
+//                -gamepad1.right_stick_x,
+//                true
+//        );
 
-        follower.setTeleOpDrive(
-                -gamepad1.left_stick_y,
-                //-gamepad1.left_stick_x,
-                0,
-                -gamepad1.right_stick_x,
-                true
-        );
-
+        rf.setPower(1);
+        rb.setPower(-1);
+        lf.setPower(1);
+        lb.setPower(1);
 
         telemetry.addData("rf", rf.getCurrentPosition());
         telemetry.addData("rb", rb.getCurrentPosition());
@@ -85,6 +89,9 @@ public class basicTeleop extends OpMode {
         telemetry.addData("errorRad", left.errorRad);
         telemetry.addData("turnPower", left.turnPower);
         telemetry.addData("drivePower", left.drivePower);
+
+        telemetry.addData("rightVoltage", right.getVoltage());
+        telemetry.addData("leftVoltage", left.getVoltage());
 
         telemetry.addData("\n----END SWERVE----", "");
 
